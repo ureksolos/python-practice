@@ -24,10 +24,14 @@ while True:
                 continue
         
     elif choice == '3':
-        for e in expenses:
-            total = total + e["Amount"]
-        print (f"{total:.2f}")
-        continue
+        if expenses == []:
+            print("No expenses yet.")
+        else:
+            for e in expenses:
+                total = total + e["Amount"]
+                print (f"{total:.2f}")
+                continue
+        
     elif choice == '4':
         expenses = []
         total = 0
