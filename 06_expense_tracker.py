@@ -19,14 +19,14 @@ while True:
         else:
             count = 1
             for e in expenses:
-                print(f"{count}.", e["desc"], "-",  e["Amount"])
+                print(f"{count}.", e["desc"], "-",  f"{e["Amount"]:.2f}")
                 count = count + 1
                 continue
         
     elif choice == '3':
         for e in expenses:
             total = total + e["Amount"]
-        print (total)
+        print (f"{total:.2f}")
         continue
     elif choice == '4':
         expenses = []
