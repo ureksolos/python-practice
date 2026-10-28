@@ -29,8 +29,8 @@ while True:
         else:
             for e in expenses:
                 total = total + e["Amount"]
-                print (f"{total:.2f}")
-                continue
+            print (f"sum: {total:.2f}")
+            continue
         
     elif choice == '4':
         expenses = []
