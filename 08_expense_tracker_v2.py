@@ -3,7 +3,7 @@ def add_expense(expenses):
 
 def list_expenses(expenses):
     if expenses == []:
-        print("No expenses yet")
+        print("No expenses yet.")
     else:
         index = 1
         for e in expenses:
@@ -12,7 +12,7 @@ def list_expenses(expenses):
 
 def print_total(expenses):
     if expenses == []:
-        print("No expenses yet")
+        print("No expenses yet.")
     else:
         total = 0
         for e in expenses:
@@ -30,7 +30,7 @@ def main():
         print("3) Total")
         print("4) Quit")
 
-        choice = input("Choose an option(1 - 4): ")
+        choice = input("Choose an option (1-4): ")
 
         if choice == '1':
             add_expense(expenses)

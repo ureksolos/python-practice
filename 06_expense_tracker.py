@@ -15,7 +15,7 @@ while True:
        continue
     elif choice == '2':
         if expenses == []:
-            print("No expenses yet")
+            print("No expenses yet.")
         else:
             count = 1
             for e in expenses:
