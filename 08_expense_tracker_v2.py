@@ -13,6 +13,7 @@ def list_expenses(expenses):
 def show_total(expenses):
     if expenses == []:
         print("No expenses yet.")
+        return
     else:
         total = 0
         for e in expenses:
