@@ -1,28 +1,27 @@
 def add_expense(expenses):
-    expenses.append({"desc": input("Enter Description: "), "amount": float(input("Enter Amount: "))})
+    expenses.append({"desc" : input("Enter description: "), "amount": float(input("Enter Amount: "))})
 
 def list_expenses(expenses):
     if expenses == []:
-        print("No expenses yet.")
+        print("No expenses yet")
     else:
-        index = 1
+        count = 1
         for e in expenses:
-            print(f"{index}. {e["desc"]} - {e["amount"]:.2f}")
-            index = index + 1
+            print(f"{count}. {e["desc"]} - {e["amount"]:.2f}")
+            count = count + 1
 
-def print_total(expenses):
+def show_total(expenses):
     if expenses == []:
         print("No expenses yet.")
     else:
         total = 0
         for e in expenses:
             total = total + e["amount"]
-        print(f"sum: {total:.2f}")
+    print(f"Total = {total:.2f}")
 
 
 def main():
     expenses = []
-
     while True:
         print("\n--- Expense Tracker Menu ---")
         print("1) Add")
@@ -34,14 +33,19 @@ def main():
 
         if choice == '1':
             add_expense(expenses)
+            continue
         elif choice == '2':
             list_expenses(expenses)
+            continue
         elif choice == '3':
-            print_total(expenses)
+            show_total(expenses)
+            continue
         elif choice == '4':
             expenses = []
-            total = 0.00
             break
+        else:
+            print("WRONG INPUT DETECTED: INPUT VALUES BEWTEEN 1-4!")
+            continue
 
 if __name__ == "__main__":
     main()
