@@ -5,10 +5,14 @@
   },
   {
     "desc": "Transportation",
-    "amount": 11.0
+    "amount": 15.0
   },
   {
-    "desc": "Other Bills",
-    "amount": 33.0
+    "desc": "Gifts",
+    "amount": 15.0
+  },
+  {
+    "desc": "Other bills",
+    "amount": 48.0
   }
 ]
