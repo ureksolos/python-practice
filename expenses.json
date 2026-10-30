@@ -1,18 +1,1 @@
-[
-  {
-    "desc": "Food",
-    "amount": 5.0
-  },
-  {
-    "desc": "Transportation",
-    "amount": 15.0
-  },
-  {
-    "desc": "Gifts",
-    "amount": 15.0
-  },
-  {
-    "desc": "Other bills",
-    "amount": 48.0
-  }
-]
+[]

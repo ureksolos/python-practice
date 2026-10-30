@@ -35,7 +35,7 @@ def load_expenses(filename = "expenses.json"):
     except FileNotFoundError:
         return []
     except json.JSONDecodeError:
-        print(f"Warning: '{filename}' is empty or corrupted. Starting with a fresh list")
+        print(f"Warning: '{filename}' contains invalid JSON or is corrupted. Starting with a fresh list")
         return []
     
 def save_expenses(expenses, filename = "expenses.json"):
