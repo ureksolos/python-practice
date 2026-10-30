@@ -1,17 +1,16 @@
 import json
 
-
-
 def add_expense(expenses):
     expenses.append({"desc": input("Enter Description: "), "amount": float(input("Enter Amount: "))})
+    print("Expense added successfully!")
 
 def list_expenses(expenses):
     if expenses == []:
-        print("No expenses yet")
+        print("No expenses yet.")
     else:
         count = 1
         for e in expenses:
-            print(f"{count}. {e["desc"]} - {e["amount"]:.2f}")
+            print(f"{count}. {e['desc']} - ${e['amount']:.2f}")
             count = count + 1
 
 def show_total(expenses):
@@ -22,11 +21,12 @@ def show_total(expenses):
         total = 0
         for e in expenses:
             total = total + e["amount"]
-    print(f"Total = {total:.2f}")
+        print(f"Total = ${total:.2f}")
 
-def load_expenses(filename = "expenses.json"):
+def load_expenses(filename="expenses.json"):
     try:
-        with open("expenses.json", "r") as f:
+        # FIXED: Using the 'filename' parameter instead of hardcoding
+        with open(filename, "r") as f:
             data = json.load(f)
             if isinstance(data, list):
                 return data
@@ -35,13 +35,12 @@ def load_expenses(filename = "expenses.json"):
     except FileNotFoundError:
         return []
     except json.JSONDecodeError:
-        print(f"Warning: '{filename}' contains invalid JSON or is corrupted. Starting with a fresh list")
+        print(f"Warning: '{filename}' contains invalid JSON or is corrupted. Starting with a fresh list.")
         return []
     
-def save_expenses(expenses, filename = "expenses.json"):
+def save_expenses(expenses, filename="expenses.json"):
     with open(filename, "w") as f:
-        json.dump(expenses, f, indent = 2)
-
+        json.dump(expenses, f, indent=2)
 
 def main():
     expenses = load_expenses()
@@ -56,19 +55,15 @@ def main():
 
         if choice == '1':
             add_expense(expenses)
-            continue
         elif choice == '2':
             list_expenses(expenses)
-            continue
         elif choice == '3':
             show_total(expenses)
-            continue
         elif choice == '4':
             save_expenses(expenses)
             break
         else:
-            print("WRONG INPUT DETECTED: INPUT VALUES BEWTEEN 1-4!")
-            continue
+            print("WRONG INPUT DETECTED: INPUT VALUES BETWEEN 1-4!")
 
 if __name__ == "__main__":
     main()
