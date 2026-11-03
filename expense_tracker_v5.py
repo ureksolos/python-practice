@@ -78,6 +78,12 @@ def load_expenses(filename='expenses.db'):
     finally:
         comm.close()
 
+def delete_expense(expense_id, filename='expenses.db'):
+    with sqlite3.connect(filename) as comm:
+        c = comm.cursor()
+        c.execute("DELETE FROM expenses WHERE id = ?", (expense_id,))
+        comm.commit()
+
 def main():
     create_table()
     load_expenses()
