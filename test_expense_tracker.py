@@ -4,7 +4,7 @@ def test_calculate_total_empty():
     assert calculate_total([]) == 0
     
 def test_calculate_total_single():
-    assert calculate_total([{"desc" : "food", "amount" : 12.5}]) == 13
+    assert calculate_total([{"desc" : "food", "amount" : 12.5}]) == 12.5
     
 
 def test_calculate_total_multiple():
@@ -16,3 +16,6 @@ def test_calculate_total_multiple():
     
 def test_format_expense():
     assert format_expense(0, {"desc" : "food", "amount" : 21.3}) == "1. food - 21.30"
+
+def test_calculate_total_with_zero():
+    assert calculate_total([{"desc" : "nothing", "amount" : 0}]) == 0
