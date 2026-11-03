@@ -29,12 +29,17 @@ def create_table_books():
     comm.close()
 
 
-def add_book(authorID, title, year):
+def add_book(title, year):
     comm = sqlite3.connect('books.db')
     c = comm.cursor()
     author_name = input("Enter Author's name: ")
-    c.execute("INSERT INTO authors (name, id) VALUES (?, ?)", (author_name, authorID))
-    c.execute("INSERT INTO books (title, year, author_id) VALUES (?, ?, ?)", (title, year, authorID))
+    c.execute("INSERT OR IGNORE INTO authors (name) VALUES (?)", (author_name,))
+
+    # Get the author's ID
+    c.execute("SELECT id FROM authors WHERE name = ?", (author_name,))
+    author_id = c.fetchone()[0]
+
+    c.execute("INSERT INTO books (title, year, author_id) VALUES (?, ?, ?)", (title, year, author_id),)
     comm.commit()
     comm.close()
 
@@ -129,7 +134,6 @@ def main():
 
         if choice == '1':
             title = input("Enter Book Title: ")
-            authorID = input("Enter Author ID: ")
             try:
                 year = int(input("Enter Year: "))
             except ValueError:
@@ -137,7 +141,7 @@ def main():
                 year = None
 
 
-            add_book(authorID, title, year)
+            add_book(title, year)
 
         elif choice == '2':
             list_books()
