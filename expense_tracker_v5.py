@@ -39,7 +39,7 @@ def list_expenses():
         print("No expenses yet.")
     else:
         for item in items:
-            print(items)
+            print(format_expense(item[0], item[1]))
 
 def calculate_total():
     comm = sqlite3.connect('expenses.db')
@@ -67,8 +67,22 @@ def show_total():
 def format_expense(desc, amount):
     return f"{desc} - {amount}"
 
+def load_expenses():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
+
+    c.execute("SELECT * FROM expenses")
+    items = c.fetchall()
+
+    if len(items) == 0:
+        return []
+    else:
+        for item in items:
+            print(item)
+
 def main():
     create_table()
+    load_expenses()
 
     while True:
         print("\n--- Expense Tracker Menu ---")
