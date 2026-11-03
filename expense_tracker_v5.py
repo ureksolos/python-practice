@@ -41,14 +41,12 @@ def list_expenses():
         for item in items:
             print(format_expense(item[0], item[1]))
 
-def calculate_total():
-    comm = sqlite3.connect('expenses.db')
-    c = comm.cursor()
-
-    c.execute("SELECT amount FROM expenses")
-    items = c.fetchall()
-
-    return sum(item[0] for item in items)
+def calculate_total(filename='expenses.db'):
+    # Pass the filename into load_expenses so it reads from the correct database
+    expenses = load_expenses(filename)
+    
+    # Sum up the amounts (assuming amount is at index 1 of the tuple)
+    return sum(amount for _, amount in expenses)
 
 
 def show_total():
@@ -67,17 +65,18 @@ def show_total():
 def format_expense(desc, amount):
     return f"{desc} - {amount}"
 
-def load_expenses():
-    comm = sqlite3.connect('expenses.db')
-    c = comm.cursor()
-
-    c.execute("SELECT * FROM expenses")
-    items = c.fetchall()
-
-    if len(items) == 0:
-        return []
-    else:
-        return ((item[0], item[2]) for item in items)
+def load_expenses(filename='expenses.db'):
+    comm = sqlite3.connect(filename)
+    try:
+        c = comm.cursor()
+        c.execute("SELECT * FROM expenses")
+        items = c.fetchall()
+        
+        if not items:
+            return []
+        return [(item[0], item[2]) for item in items]
+    finally:
+        comm.close()
 
 def main():
     create_table()
