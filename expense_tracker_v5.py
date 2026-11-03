@@ -1,70 +1,93 @@
-import json
+import sqlite3
 
-def add_expense(expenses):
-    expenses.append({"desc": input("Enter Description: "), "amount": float(input("Enter Amount: "))})
-    print("Expense added successfully!")
+def create_table():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
 
-def list_expenses(expenses):
-    if not expenses:
+    c.execute(""" CREATE TABLE IF NOT EXISTS expenses
+        (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        desc TEXT NOT NULL,
+        amount REAL NOT NULL
+        )
+        """)
+
+    comm.commit()
+    comm.close()
+
+def add_expense():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
+
+    desc = input("Enter Description: ")
+    amount = input("Enter Amount: ")
+
+    c.execute("INSERT INTO expenses (desc, amount) VALUES (?, ?)", (desc, amount))
+
+    comm.commit()
+    comm.close()
+
+def list_expenses():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
+
+    c.execute("SELECT desc, amount FROM expenses")
+
+    items = c.fetchall()
+
+    if len(items) < 1:
         print("No expenses yet.")
     else:
-        for i, e in enumerate(expenses):
-            print(format_expense(i, e))
+        for item in items:
+            print(items)
 
-def show_total(expenses):
-    if not expenses:
+def calculate_total():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
+
+    c.execute("SELECT amount FROM expenses")
+    items = c.fetchall()
+
+    return sum(item[0] for item in items)
+
+
+def show_total():
+    comm = sqlite3.connect('expenses.db')
+    c = comm.cursor()
+
+    c.execute("SELECT amount FROM expenses")
+
+    items = c.fetchall()
+
+    if len(items) == 0:
         print("No expenses yet.")
     else:
-        print(f"sum: {calculate_total(expenses):.2f}")
+        print(f"sum: {calculate_total():.2f}")
 
-def calculate_total(expenses):
-    return sum(e["amount"] for e in expenses)
-
-def format_expense(index, expense):
-    return f"{index + 1}. {expense['desc']} - {expense['amount']:.2f}"
-
-
-def load_expenses(filename="expenses.json"):
-    try:
-        # FIXED: Using the 'filename' parameter instead of hardcoding
-        with open(filename, "r") as f:
-            data = json.load(f)
-            if isinstance(data, list):
-                return data
-            else:
-                return []
-    except FileNotFoundError:
-        return []
-    except json.JSONDecodeError:
-        print(f"Warning: '{filename}' contains invalid JSON or is corrupted. Starting with a fresh list.")
-        return []
-    
-def save_expenses(expenses, filename="expenses.json"):
-    with open(filename, "w") as f:
-        json.dump(expenses, f, indent=2)
+def format_expense(desc, amount):
+    return f"{desc} - {amount}"
 
 def main():
-    expenses = load_expenses()
+    create_table()
+
     while True:
         print("\n--- Expense Tracker Menu ---")
         print("1) Add")
         print("2) List")
         print("3) Total")
         print("4) Quit")
-
+        
         choice = input("Choose an option (1-4): ")
 
         if choice == '1':
-            add_expense(expenses)
+            add_expense()
+            print("Expense added successfully!")
         elif choice == '2':
-            list_expenses(expenses)
+            list_expenses()
         elif choice == '3':
-            show_total(expenses)
+            show_total()
         elif choice == '4':
-            save_expenses(expenses)
             break
-        else:
-            print("WRONG INPUT DETECTED: INPUT VALUES BETWEEN 1-4!")
 
 if __name__ == "__main__":
     main()
