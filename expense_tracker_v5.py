@@ -77,8 +77,7 @@ def load_expenses():
     if len(items) == 0:
         return []
     else:
-        for item in items:
-            print(item)
+        return ((item[0], item[2]) for item in items)
 
 def main():
     create_table()
